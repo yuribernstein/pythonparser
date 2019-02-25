@@ -27,4 +27,4 @@ Contributing
 License and Authors
 -------------------
 Authors: Yuri Bernshtein
-License: GPL v2
+License: GPL v3

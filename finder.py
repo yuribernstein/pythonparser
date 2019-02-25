@@ -5,9 +5,9 @@ import re
 from termcolor import colored
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-f', '--file',help='file name. multiple files allowed "file1 file2"')
-parser.add_argument('-r', '--regex',help='a pattern to search for')
-parser.add_argument('-c', '--color', action='store_true',help='highlight matched text')
+parser.add_argument('-f', '--file', help='file name. multiple files allowed')
+parser.add_argument('-r', '--regex', help='a pattern to search for')
+parser.add_argument('-c', '--color', action='store_true', help='color output')
 parser.add_argument('-u', '--underscore', action='store_true',
                     help='puts a "^" sign under the match')
 parser.add_argument('-m', '--machine', action='store_true',
@@ -31,9 +31,10 @@ if not args.file:
 else:
     file = args.file
 
+
 class match_finder:
     def parse_file(file, regex):
-        regex = re.compile(regex) # change regex type
+        regex = re.compile(regex)  # change regex type
         with open(file, 'r') as current_file:
             for line_i, line in enumerate(current_file, 1):
                 if regex.search(line):
@@ -41,25 +42,30 @@ class match_finder:
                         group = match.group()
                         start_position = match.start()
                         end_position = match.end()
-                        line_no = ( "%d" % line_i )
+                        line_no = ("%d" % line_i)
                         finding = ('"{}"'.format(group))
                         in_string = colored(match.string)
-                        generate_output.output(file, line_no, finding, in_string, start_position, end_position)
+                        generate_output.out(file, line_no, finding, in_string,
+                                            start_position, end_position)
+
 
 class generate_output:
-    def output(file, line_no, finding, in_string, start_position, end_position):
+    def out(file, line_no, finding, in_string, start_position, end_position):
         if args.color:
-            print(in_string)
-            in_string = str(in_string[0:start_position] + colored(in_string[start_position:end_position], 'green') + in_string[end_position:])
+            in_string = str(in_string[0:start_position] +
+                            colored(in_string[start_position:end_position],
+                                    'green') + in_string[end_position:])
             finding = (colored(finding, 'green'))
             file = (colored(file, 'blue'))
             line_no = (colored(line_no, 'red'))
         if args.machine:
-            print(file + ":" + line_no + ":" + str(start_position) + ":" + finding)
+            print(file + ":" + line_no + ":" + str(start_position) +
+                  ":" + finding)
         else:
             print(in_string + "file: " + file + " " + "line: " + line_no)
             if args.underscore:
-                print(' ' * int(start_position) + '^' * (end_position - start_position))
+                print(' ' * int(start_position) +
+                      '^' * (end_position - start_position))
 
 for each in file.split():
     match_finder.parse_file(file, regex)

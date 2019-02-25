@@ -13,12 +13,12 @@ This python script searches for given regex pattern in file(s) or stdin
 
 Usage examples:
 ---------------
-python3 finder.py -f "file.txt" -r "[0-9][0-9][0-9] -c -u"
+python3 finder.py -f "file.txt" -r "[0-9][0-9][0-9]" -c -u
   
 Contributing
 ------------
 1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
+2. Create a branch
 3. Write you change
 4. Write tests for your change (if applicable)
 5. Run the tests, ensuring they all pass
